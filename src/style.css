@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .section-max-w {
+    @apply max-w-[900px] mx-auto max-[950px]:px-4;
+  }
+}
+
