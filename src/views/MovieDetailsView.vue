@@ -73,7 +73,7 @@ onBeforeMount(async () => {
     // check if the movie is in the watchlist. If it is, set the watched value to the value in the watchlist
     if (watchlist.value.some((entry) => entry.imdbID === movie.value.imdbID)) {
         watched.value = watchlist.value.some((entry) => entry.imdbID === movie.value.imdbID && entry.watched)
-    } 
+    }
 })
 
 async function getMovieById(id: string) {
@@ -145,7 +145,7 @@ function colorMetascore(type: string, score: string): string {
         if (parseInt(score) >= 61) {
             return 'bg-green-600'
         }
-        else if (parseInt(score) >= 60) {
+        else if (parseInt(score) >= 40) {
             return 'bg-yellow-500'
         }
         else {
@@ -176,10 +176,7 @@ function colorMetascore(type: string, score: string): string {
                 </h1>
                 <!-- Movie info -->
                 <div class="flex items-center text-gray-300 flex-wrap">
-                    <a :href="movie.Type === 'game' ? 'https://www.esrb.org/ratings-guide/' : 'https://www.filmratings.com/'"
-                        ref="noopener noreferer" target="_blank">
-                        <p class="border border-gray-300 px-1 mr-2">{{ movie.Rated }}</p>
-                    </a>
+                    <p class="border border-gray-300 px-1 mr-2">{{ movie.Rated }}</p>
                     <p class="">{{ capitalizeFirstLetter(movie.Type as string) }}</p>
                     <span aria-hidden="true"> <i class="bi bi-dot"></i> </span>
                     <p class="">{{ movie.Released }}</p>
@@ -192,7 +189,8 @@ function colorMetascore(type: string, score: string): string {
                 </div>
                 <!-- Ratings -->
                 <div class="flex gap-4 flex-wrap">
-                    <a :href="'https://www.imdb.com/title/' + movie.imdbID" rel="noopener noreferer" target="_blank">
+                    <a v-if="movie.imdbRating !== 'N/A'" :href="'https://www.imdb.com/title/' + movie.imdbID"
+                        rel="noopener noreferer" target="_blank">
                         <div class="flex gap-1 items-end">
                             <p>IMDb Rating:</p>
                             <p class="font-bold">{{ movie.imdbRating }}</p>/10
@@ -200,15 +198,16 @@ function colorMetascore(type: string, score: string): string {
                                 ({{ movie.imdbVotes ? formatVotes(movie.imdbVotes) : movie.imdbVotes }})</p>
                         </div>
                     </a>
-                    <div v-if="movie.Metascore !== 'N/A'">
+                    <a v-if="movie.Metascore !== 'N/A'" rel="noopener noreferer" target="_blank"
+                        :href="`https://www.metacritic.com/search/all/${encodeURI(movie.Title as string)}/results`">
                         <div class="flex gap-1 items-end">
                             <p>Metascore</p>
                             <p class="px-1 rounded-md font-semibold"
-                                :class="colorMetascore(movie.Type as string, movie.Metascore as string)">{{
-                                    movie.Metascore
-                                }}</p>
+                                :class="colorMetascore(movie.Type as string, movie.Metascore as string)">
+                                {{ movie.Metascore }}
+                            </p>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="flex gap-2">
