@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "db": "json-server --watch db.json --port 3004"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vueuse/core": "^9.12.0",
