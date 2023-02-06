@@ -27,7 +27,7 @@ const searchParams = ref({})
 watch(searchParams, () => {
     // if search params are not empty, get search results
     // this is to prevent the reset button from triggering a search
-    if (searchParams.value && Object.keys(searchParams.value).length > 0) {      
+    if (searchParams.value && Object.keys(searchParams.value).length > 0) {
         getSearchResults()
     }
 })
@@ -58,7 +58,7 @@ async function getSearchResults() {
     if (searchParams.value) {
         const response = await networkRequest({
             method: 'GET',
-            url: 'http://www.omdbapi.com/',
+            url: 'https://www.omdbapi.com/',
             params: {
                 apikey: apikey.value,
                 r: 'json',
@@ -112,6 +112,9 @@ function clearFilters() {
 
     // reset search results
     searchResults.value = {} as OmdbResponseBySearch
+
+    // reset query params
+    router.push({ query: {} })
 
 }
 

@@ -79,7 +79,7 @@ onBeforeMount(async () => {
 async function getMovieById(id: string) {
     const response = await networkRequest({
         method: 'GET',
-        url: 'http://www.omdbapi.com/',
+        url: 'https://www.omdbapi.com/',
         params: {
             apikey: apikey.value,
             i: id,
